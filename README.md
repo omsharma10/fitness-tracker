@@ -1,170 +1,308 @@
-# FitTrack - Online Fitness Tracking Application
+# 🏋️ FitTrack
 
-FitTrack is a Java-based web application for managing fitness activities, workouts, fitness goals, challenges, challenge participation, and fitness-related content.
+### Full-Stack Fitness Tracking Web Application
 
-## Features
+FitTrack is a full-stack fitness management application built to help users manage workouts, fitness goals, challenges, and fitness activities through a secure web platform.
 
-### USER
-- Register and login securely
-- Manage profile
-- Add, view, edit and delete workouts
-- Create and update fitness goals
-- View and join challenges
-- Track challenge progress and status
-- Submit fitness-related content
-- View approved content
+The application also includes administrative functionality for managing users, challenges, participants, content, and system activities.
 
-### ADMIN
-- Manage registered users
-- Create, edit and delete challenges
-- View and manage challenge participants
-- Update participant progress and status
-- Remove participants
-- Approve or reject fitness content
-- View activity logs
+---
 
-## Technology Stack
+## ✨ Features
 
-- Java
-- Spring Boot
-- Spring Security
-- Spring Data JPA
-- Hibernate
-- MySQL
-- Thymeleaf
-- Bootstrap
-- JavaScript
-- Maven
-- IntelliJ IDEA
-- Postman
+### 👤 User Features
 
-## Project Structure
+- 🔐 User registration and login
+- 👤 User profile management
+- 🏋️ Workout management
+- 🎯 Fitness goal management
+- 🏆 Fitness challenges
+- 📈 Challenge progress tracking
+- 📝 Fitness content submission
+- 📚 View fitness content
+
+### 👨‍💼 Admin Features
+
+- 👥 Manage registered users
+- 🏆 Create and manage challenges
+- 👤 Manage challenge participants
+- 📊 Monitor participant progress
+- 📝 Approve or reject submitted content
+- 📋 View system activity
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| ☕ Java | Core programming language |
+| 🌱 Spring Boot | Backend framework |
+| 🔐 Spring Security | Authentication & authorization |
+| 🗄️ MySQL | Database |
+| 🧩 Spring Data JPA | Data persistence |
+| 🐘 Hibernate | ORM |
+| 🎨 Thymeleaf | Server-side UI |
+| 🅱️ Bootstrap | UI styling |
+| ⚡ JavaScript | Client-side functionality |
+| 📦 Maven | Build & dependency management |
+
+---
+
+## 🏗️ Application Architecture
 
 ```text
-src/main/java/com/fittrack/fitness_tracker/
-├── config/
-├── controller/
-├── entity/
-├── repository/
-├── security/
-└── service/
+                    ┌─────────────────────┐
+                    │     Web Browser     │
+                    │ HTML • CSS • JS     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    Controllers      │
+                    │    Spring Boot      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │      Services       │
+                    │   Business Logic    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    Repositories     │
+                    │   Spring Data JPA   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │        MySQL        │
+                    │      Database       │
+                    └─────────────────────┘
 
-src/main/resources/
-├── templates/
-└── application.properties
+## 📂 Project Structure
+
+```text
+fitness-tracker/
+│
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/fittrack/fitness_tracker/
+│   │   │       ├── config/
+│   │   │       ├── controller/
+│   │   │       ├── entity/
+│   │   │       ├── repository/
+│   │   │       ├── security/
+│   │   │       └── service/
+│   │   │
+│   │   └── resources/
+│   │       ├── templates/
+│   │       └── application.properties
+│   │
+│   └── test/
+│
+├── fittrack_db.sql
+├── pom.xml
+├── mvnw
+├── mvnw.cmd
+├── .gitignore
+└── README.md
 ```
 
-## Database Setup
+---
 
-1. Install and start MySQL Server.
-2. Open MySQL Workbench or the MySQL command line.
-3. Run the SQL script included with this project:
+## 🗄️ Database
+
+FitTrack uses **MySQL** for persistent application data.
+
+The database setup script is included in:
 
 ```text
 fittrack_db.sql
 ```
 
-4. Update the MySQL password in:
+The application uses Spring Data JPA and Hibernate for database interaction.
+
+---
+
+## 🔐 Security
+
+The application uses **Spring Security** for authentication and authorization.
+
+Security-related functionality includes:
+
+* User authentication
+* Role-based access
+* Protected application resources
+* Password hashing
+* Admin/user access separation
+
+> ⚠️ Never commit database passwords, API keys, tokens, or other secrets to GitHub.
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+Make sure you have installed:
+
+* Java JDK
+* MySQL
+* Git
+* Maven (optional because Maven Wrapper is included)
+
+---
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/omsharma10/fitness-tracker.git
+```
+
+```bash
+cd fitness-tracker
+```
+
+---
+
+### 2. Create the database
+
+Open MySQL and create the required database.
+
+You can use the provided:
 
 ```text
-src/main/resources/application.properties
+fittrack_db.sql
 ```
 
-Example:
+---
 
-```properties
-spring.datasource.username=root
-spring.datasource.password=YOUR_MYSQL_PASSWORD
-```
+### 3. Configure database credentials
 
-## Running the Application
-
-1. Open the project in IntelliJ IDEA.
-2. Make sure Java and Maven are configured.
-3. Make sure MySQL is running.
-4. Verify the database configuration.
-5. Run:
+Configure your local database credentials using environment variables.
 
 ```text
-FitnessTrackerApplication.java
+DB_USERNAME
+DB_PASSWORD
 ```
 
-6. Open:
+Do not commit real credentials to GitHub.
+
+---
+
+### 4. Run the application
+
+#### Windows
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+#### Linux / macOS
+
+```bash
+./mvnw spring-boot:run
+```
+
+---
+
+### 5. Open the application
+
+Once the application starts, open:
 
 ```text
 http://localhost:8080
 ```
 
-## Authentication
+---
 
-The application uses Spring Security.
+## 📸 Screenshots
 
-- Normal accounts use the `USER` role.
-- Administrative accounts use the `ADMIN` role.
-- Passwords created through the application are stored using BCrypt hashing.
+Screenshots of the application will be added here.
 
-To create an administrator account:
+### 🔐 Login
 
-1. Register a normal account.
-2. Update its role in MySQL:
+> Screenshot coming soon
 
-```sql
-USE fittrack_db;
+### 🏠 Dashboard
 
-UPDATE users
-SET role = 'ADMIN'
-WHERE email = 'admin@fittrack.com';
+> Screenshot coming soon
+
+### 🏋️ Workout Management
+
+> Screenshot coming soon
+
+### 🎯 Fitness Goals
+
+> Screenshot coming soon
+
+### 🏆 Challenges
+
+> Screenshot coming soon
+
+### 👨‍💼 Admin Dashboard
+
+> Screenshot coming soon
+
+---
+
+## 🚀 Future Improvements
+
+* 📊 Advanced fitness analytics
+* 📈 Progress visualization
+* 🔔 Notifications and reminders
+* 📱 Improved mobile responsiveness
+* ☁️ Cloud deployment
+* 🧪 Expanded automated testing
+* 🔐 Additional security improvements
+
+---
+
+## 🎯 Learning Outcomes
+
+Through this project, I gained practical experience with:
+
+* Java backend development
+* Spring Boot application development
+* Spring Security
+* REST API concepts
+* MVC architecture
+* Database management
+* JPA & Hibernate
+* MySQL
+* Server-side rendering with Thymeleaf
+* Maven project management
+* Git & GitHub
+
+---
+
+## 👨‍💻 Author
+
+### Om Sharma
+
+**B.Tech Computer Science & Engineering — Cybersecurity**
+
+Interested in:
+
+`Cybersecurity` • `Networking` • `Java` • `Python` • `Linux` • `Software Development`
+
+---
+
+## ⭐ Support
+
+If you find this project useful or interesting, consider giving the repository a ⭐.
+
+---
+
+<p align="center">
+
+### 🔐 Learn • Build • Secure • Improve
+
+</p>
 ```
 
-Then log in again.
+---
 
-## API Groups
-
-| API | Purpose |
-|---|---|
-| `/api/users` | User registration and management |
-| `/api/workouts` | Workout management |
-| `/api/goals` | Fitness goal management |
-| `/api/challenges` | Challenge management |
-| `/api/challenge-participants` | Challenge participation |
-| `/api/content` | Fitness content |
-| `/api/admin` | Administrative operations |
-
-## Database Tables
-
-- `users`
-- `workouts`
-- `fitness_goals`
-- `challenges`
-- `challenge_participants`
-- `fitness_content`
-- `system_settings`
-- `activity_logs`
-
-## Default Port
-
-```text
-8080
-```
-
-## Important Note
-
-If an older database contains manually inserted users with plain-text passwords, those accounts may not authenticate after BCrypt security is enabled. Create a new account through the application or reset the password through the application's registration flow.
-
-## Project Documentation
-
-The complete project report is provided separately as:
-
-```text
-FitTrack_Project_Documentation.docx
-```
-
-## Author
-
-Name: ______________________________
-
-Roll Number: _______________________
-
-Course: B.Tech Computer Science and Engineering
-
-Academic Year: 2026-2027
