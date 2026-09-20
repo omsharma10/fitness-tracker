@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard • FitTrack</title>
+
+    <!-- Bootstrap -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        :root {
+
+            --primary: #7046e8;
+            --primary-dark: #5430bd;
+            --blue: #1677ff;
+            --green: #19b887;
+            --orange: #f29b24;
+            --red: #ff5364;
+
+            --dark: #17233d;
+            --muted: #6d7b94;
+
+            --bg: #f6f8fd;
+            --border: #e4e8f1;
+
+            --shadow:
+                    0 14px 45px rgba(
+                            30,
+                            45,
+                            80,
+                            0.08
+                    );
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                    Inter,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+
+            color: var(--dark);
+
+            background:
+
+                    radial-gradient(
+                            circle at 0% 10%,
+                            rgba(
+                                    112,
+                                    70,
+                                    232,
+                                    0.10
+                            ),
+                            transparent 22%
+                    ),
+
+                    radial-gradient(
+                            circle at 100% 80%,
+                            rgba(
+                                    22,
+                                    119,
+                                    255,
+                                    0.09
+                            ),
+                            transparent 22%
+                    ),
+
+                    var(--bg);
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .fit-navbar {
+
+            min-height: 76px;
+
+            background:
+                    linear-gradient(
+                            105deg,
+                            #15213a,
+                            #26385f
+                    );
+
+            box-shadow:
+                    0 5px 25px
+                    rgba(
+                            20,
+                            30,
+                            60,
+                            0.16
+                    );
+
+        }
+
+
+        .brand {
+
+            color: white !important;
+
+            font-size: 27px;
+
+            font-weight: 850;
+
+            text-decoration: none;
+
+        }
+
+
+        .brand i {
+
+            color: #a56cff;
+
+            margin-right: 8px;
+
+        }
+
+
+        .nav-link-custom {
+
+            color: #dce4f5;
+
+            text-decoration: none;
+
+            padding: 10px 14px;
+
+            border-radius: 12px;
+
+            margin-left: 3px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .nav-link-custom:hover,
+        .nav-link-custom.active {
+
+            color: white;
+
+            background:
+                    rgba(
+                            112,
+                            70,
+                            232,
+                            0.28
+                    );
+
+        }
+
+
+        .logout-btn {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #ff6877,
+                            #ff465a
+                    );
+
+            color: white;
+
+            border-radius: 12px;
+
+            padding: 10px 17px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page-container {
+
+            max-width: 1350px;
+
+            margin: auto;
+
+            padding:
+                    38px 25px 70px;
+
+        }
+
+
+        /* =====================================================
+           WELCOME HERO
+        ===================================================== */
+
+        .welcome-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 30px;
+
+            padding: 42px;
+
+            color: white;
+
+            margin-bottom: 30px;
+
+            background:
+                    linear-gradient(
+                            120deg,
+                            #6840d9,
+                            #456eea
+                    );
+
+            box-shadow:
+                    0 18px 50px
+                    rgba(
+                            88,
+                            65,
+                            210,
+                            0.25
+                    );
+
+        }
+
+
+        .welcome-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+
+            height: 280px;
+
+            border-radius: 50%;
+
+            right: -90px;
+
+            top: -110px;
+
+            background:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.10
+                    );
+
+        }
+
+
+        .welcome-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            right: 180px;
+
+            bottom: -120px;
+
+            background:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.07
+                    );
+
+        }
+
+
+        .welcome-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .welcome-title {
+
+            font-size: 43px;
+
+            font-weight: 850;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .welcome-text {
+
+            font-size: 18px;
+
+            opacity: 0.88;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .profile-pill {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            background:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.14
+                    );
+
+            border:
+                    1px solid
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.18
+                    );
+
+            padding:
+                    10px 15px;
+
+            border-radius: 999px;
+
+            font-weight: 650;
+
+        }
+
+
+        .profile-pill i {
+
+            font-size: 19px;
+
+        }
+
+
+        .hero-emoji {
+
+            position: absolute;
+
+            right: 50px;
+
+            bottom: 20px;
+
+            font-size: 105px;
+
+            opacity: 0.90;
+
+            z-index: 1;
+
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 22px;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.2s;
+
+        }
+
+
+        .stat-card:hover {
+
+            transform:
+                    translateY(-4px);
+
+        }
+
+
+        .stat-icon {
+
+            width: 53px;
+
+            height: 53px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 17px;
+
+            font-size: 24px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .purple {
+
+            color: var(--primary);
+
+            background: #eee8ff;
+
+        }
+
+
+        .blue {
+
+            color: var(--blue);
+
+            background: #e8f2ff;
+
+        }
+
+
+        .green {
+
+            color: var(--green);
+
+            background: #e7faf3;
+
+        }
+
+
+        .orange {
+
+            color: var(--orange);
+
+            background: #fff3df;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 30px;
+
+            font-weight: 850;
+
+            line-height: 1;
+
+        }
+
+
+        .stat-label {
+
+            color: var(--muted);
+
+            margin-top: 8px;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        .section-title {
+
+            font-size: 27px;
+
+            font-weight: 820;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .section-subtitle {
+
+            color: var(--muted);
+
+            margin-bottom: 22px;
+
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .feature-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 38px;
+
+        }
+
+
+        .feature-card {
+
+            background: white;
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 23px;
+
+            padding: 24px;
+
+            text-decoration: none;
+
+            color: var(--dark);
+
+            box-shadow: var(--shadow);
+
+            transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+
+        }
+
+
+        .feature-card:hover {
+
+            transform:
+                    translateY(-6px);
+
+            box-shadow:
+                    0 20px 55px
+                    rgba(
+                            30,
+                            45,
+                            80,
+                            0.13
+                    );
+
+            color: var(--dark);
+
+        }
+
+
+        .feature-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 27px;
+
+            margin-bottom: 17px;
+
+        }
+
+
+        .feature-title {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .feature-text {
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.45;
+
+        }
+
+
+        .arrow {
+
+            margin-top: 17px;
+
+            color: var(--primary);
+
+            font-weight: 750;
+
+        }
+
+
+        /* =====================================================
+           LOWER GRID
+        ===================================================== */
+
+        .lower-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr
+                0.9fr;
+
+            gap: 22px;
+
+        }
+
+
+        .panel {
+
+            background: white;
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 25px;
+
+            padding: 28px;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .avatar {
+
+            width: 65px;
+
+            height: 65px;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-size: 28px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            var(--primary),
+                            var(--blue)
+                    );
+
+        }
+
+
+        .profile-name {
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+        }
+
+
+        .profile-email {
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+        }
+
+
+        .profile-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 13px;
+
+        }
+
+
+        .profile-item {
+
+            background: #f7f8fc;
+
+            border-radius: 15px;
+
+            padding: 15px;
+
+        }
+
+
+        .profile-label {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .profile-value {
+
+            font-size: 16px;
+
+            font-weight: 750;
+
+            margin-top: 4px;
+
+        }
+
+
+        /* =====================================================
+           PROGRESS
+        ===================================================== */
+
+        .progress-item {
+
+            margin-bottom: 23px;
+
+        }
+
+
+        .progress-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .progress-name {
+
+            font-weight: 750;
+
+        }
+
+
+        .progress-value {
+
+            color: var(--primary);
+
+            font-weight: 800;
+
+        }
+
+
+        .progress {
+
+            height: 10px;
+
+            border-radius: 99px;
+
+            background: #edf0f6;
+
+        }
+
+
+        .progress-bar {
+
+            border-radius: 99px;
+
+            background:
+                    linear-gradient(
+                            90deg,
+                            var(--primary),
+                            var(--blue)
+                    );
+
+        }
+
+
+        /* =====================================================
+           ADMIN CARD
+        ===================================================== */
+
+        .admin-card {
+
+            margin-top: 22px;
+
+            padding: 23px;
+
+            border-radius: 22px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #fff0f3,
+                            #f1eaff
+                    );
+
+            border:
+                    1px solid #eadcf5;
+
+        }
+
+
+        .admin-btn {
+
+            display: inline-block;
+
+            margin-top: 14px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            var(--primary),
+                            var(--blue)
+                    );
+
+            color: white;
+
+            text-decoration: none;
+
+            padding:
+                    11px 17px;
+
+            border-radius: 13px;
+
+            font-weight: 750;
+
+        }
+
+
+        .admin-btn:hover {
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .stats-grid,
+            .feature-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .lower-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .hero-emoji {
+
+                opacity: 0.25;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .page-container {
+
+                padding:
+                        25px 14px 50px;
+
+            }
+
+
+            .welcome-card {
+
+                padding: 30px 24px;
+
+            }
+
+
+            .welcome-title {
+
+                font-size: 34px;
+
+            }
+
+
+            .stats-grid,
+            .feature-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .profile-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .nav-link-custom {
+
+                display: none;
+
+            }
+
+
+            .hero-emoji {
+
+                display: none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+
+<nav class="navbar navbar-dark fit-navbar">
+
+    <div class="container-fluid px-4">
+
+        <a
+                href="/dashboard"
+                class="brand">
+
+            <i class="bi bi-universal-access-circle"></i>
+
+            FitTrack
+
+        </a>
+
+
+        <div>
+
+            <a
+                    href="/dashboard"
+                    class="nav-link-custom active">
+
+                <i class="bi bi-grid-1x2"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                    href="/workouts"
+                    class="nav-link-custom">
+
+                <i class="bi bi-lightning-charge"></i>
+
+                Workouts
+
+            </a>
+
+
+            <a
+                    href="/goals"
+                    class="nav-link-custom">
+
+                <i class="bi bi-bullseye"></i>
+
+                Goals
+
+            </a>
+
+
+            <a
+                    href="/challenges"
+                    class="nav-link-custom">
+
+                <i class="bi bi-trophy"></i>
+
+                Challenges
+
+            </a>
+
+
+            <a
+                    href="/content"
+                    class="nav-link-custom">
+
+                <i class="bi bi-play-circle"></i>
+
+                Content
+
+            </a>
+
+
+            <a
+                    href="/logout"
+                    class="logout-btn ms-2">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ============================================================
+     MAIN
+============================================================ -->
+
+<main class="page-container">
+
+
+    <!-- ========================================================
+         WELCOME
+    ======================================================== -->
+
+    <section class="welcome-card">
+
+
+        <div class="welcome-content">
+
+
+            <h1 class="welcome-title">
+
+                Welcome back,
+                <span th:text="${user.name}">
+                    User
+                </span>
+                👋
+
+            </h1>
+
+
+            <p class="welcome-text">
+
+                Keep moving, keep improving.
+                Your fitness journey continues today.
+
+            </p>
+
+
+            <div class="profile-pill">
+
+                <i class="bi bi-person-circle"></i>
+
+                <span
+                        th:text="${user.fitnessGoal != null
+                        ? user.fitnessGoal
+                        : 'Your Fitness Journey'}">
+
+                    Your Fitness Journey
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="hero-emoji">
+
+            🏋️
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ========================================================
+         STATS
+    ======================================================== -->
+
+    <section class="stats-grid">
+
+
+        <!-- WORKOUTS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+
+                <i class="bi bi-lightning-charge-fill"></i>
+
+            </div>
+
+
+            <div
+                    class="stat-number"
+                    th:text="${workoutCount}">
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                Total Workouts
+
+            </div>
+
+        </div>
+
+
+        <!-- GOALS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+
+                <i class="bi bi-bullseye"></i>
+
+            </div>
+
+
+            <div
+                    class="stat-number"
+                    th:text="${goalCount}">
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                Active Goals
+
+            </div>
+
+        </div>
+
+
+        <!-- CHALLENGES -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+
+                <i class="bi bi-trophy-fill"></i>
+
+            </div>
+
+
+            <div
+                    class="stat-number"
+                    th:text="${challengeCount}">
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                Joined Challenges
+
+            </div>
+
+        </div>
+
+
+        <!-- COMPLETED -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+            </div>
+
+
+            <div
+                    class="stat-number"
+                    th:text="${completedChallengeCount}">
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                Completed Challenges
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ========================================================
+         QUICK ACTIONS
+    ======================================================== -->
+
+    <section>
+
+
+        <h2 class="section-title">
+
+            Quick Actions
+
+        </h2>
+
+
+        <p class="section-subtitle">
+
+            Everything you need to stay on track.
+
+        </p>
+
+
+        <div class="feature-grid">
+
+
+            <!-- WORKOUT -->
+
+            <a
+                    href="/workouts"
+                    class="feature-card">
+
+                <div
+                        class="feature-icon purple">
+
+                    <i class="bi bi-lightning-charge-fill"></i>
+
+                </div>
+
+
+                <div class="feature-title">
+
+                    Log Workout
+
+                </div>
+
+
+                <div class="feature-text">
+
+                    Record your latest workout,
+                    duration and calories.
+
+                </div>
+
+
+                <div class="arrow">
+
+                    Start →
+
+                </div>
+
+            </a>
+
+
+            <!-- GOALS -->
+
+            <a
+                    href="/goals"
+                    class="feature-card">
+
+                <div
+                        class="feature-icon blue">
+
+                    <i class="bi bi-bullseye"></i>
+
+                </div>
+
+
+                <div class="feature-title">
+
+                    Manage Goals
+
+                </div>
+
+
+                <div class="feature-text">
+
+                    Create fitness goals and
+                    track your progress.
+
+                </div>
+
+
+                <div class="arrow">
+
+                    View Goals →
+
+                </div>
+
+            </a>
+
+
+            <!-- CHALLENGES -->
+
+            <a
+                    href="/challenges"
+                    class="feature-card">
+
+                <div
+                        class="feature-icon orange">
+
+                    <i class="bi bi-trophy-fill"></i>
+
+                </div>
+
+
+                <div class="feature-title">
+
+                    Join Challenge
+
+                </div>
+
+
+                <div class="feature-text">
+
+                    Take part in fitness
+                    challenges and compete.
+
+                </div>
+
+
+                <div class="arrow">
+
+                    Explore →
+
+                </div>
+
+            </a>
+
+
+            <!-- CONTENT -->
+
+            <a
+                    href="/content"
+                    class="feature-card">
+
+                <div
+                        class="feature-icon green">
+
+                    <i class="bi bi-play-circle-fill"></i>
+
+                </div>
+
+
+                <div class="feature-title">
+
+                    Fitness Content
+
+                </div>
+
+
+                <div class="feature-text">
+
+                    Learn useful tips and
+                    share your own knowledge.
+
+                </div>
+
+
+                <div class="arrow">
+
+                    Explore →
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================
+         LOWER SECTION
+    ======================================================== -->
+
+    <section class="lower-grid">
+
+
+        <!-- ====================================================
+             PROFILE
+        ==================================================== -->
+
+        <div class="panel">
+
+
+            <div class="profile-header">
+
+
+                <div class="avatar">
+
+                    <i class="bi bi-person-fill"></i>
+
+                </div>
+
+
+                <div>
+
+                    <div
+                            class="profile-name"
+                            th:text="${user.name}">
+
+                        User Name
+
+                    </div>
+
+
+                    <div
+                            class="profile-email"
+                            th:text="${user.email}">
+
+                        user@example.com
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <h3 class="fw-bold mb-3">
+
+                Your Profile
+
+            </h3>
+
+
+            <div class="profile-grid">
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+
+                        Age
+
+                    </div>
+
+
+                    <div
+                            class="profile-value"
+                            th:text="${user.age != null
+                            ? user.age + ' years'
+                            : 'Not set'}">
+
+                        Not set
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+
+                        Height
+
+                    </div>
+
+
+                    <div
+                            class="profile-value"
+                            th:text="${user.height != null
+                            ? user.height + ' cm'
+                            : 'Not set'}">
+
+                        Not set
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+
+                        Weight
+
+                    </div>
+
+
+                    <div
+                            class="profile-value"
+                            th:text="${user.weight != null
+                            ? user.weight + ' kg'
+                            : 'Not set'}">
+
+                        Not set
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+
+                        Fitness Goal
+
+                    </div>
+
+
+                    <div
+                            class="profile-value"
+                            th:text="${user.fitnessGoal != null
+                            ? user.fitnessGoal
+                            : 'Not set'}">
+
+                        Not set
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ====================================================
+             PROGRESS
+        ==================================================== -->
+
+        <div class="panel">
+
+
+            <h3 class="fw-bold mb-1">
+
+                Your Activity
+
+            </h3>
+
+
+            <p class="text-secondary mb-4">
+
+                A quick look at your progress.
+
+            </p>
+
+
+            <!-- WORKOUT PROGRESS -->
+
+            <div class="progress-item">
+
+
+                <div class="progress-top">
+
+                    <span class="progress-name">
+
+                        Workouts
+
+                    </span>
+
+
+                    <span
+                            class="progress-value"
+                            th:text="${workoutCount}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                            class="progress-bar"
+                            role="progressbar"
+                            th:style="'width:' +
+                            ${workoutCount > 10
+                            ? 100
+                            : workoutCount * 10} + '%'">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GOAL PROGRESS -->
+
+            <div class="progress-item">
+
+
+                <div class="progress-top">
+
+                    <span class="progress-name">
+
+                        Goals
+
+                    </span>
+
+
+                    <span
+                            class="progress-value"
+                            th:text="${goalCount}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                            class="progress-bar"
+                            role="progressbar"
+                            th:style="'width:' +
+                            ${goalCount > 10
+                            ? 100
+                            : goalCount * 10} + '%'">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHALLENGE PROGRESS -->
+
+            <div class="progress-item">
+
+
+                <div class="progress-top">
+
+                    <span class="progress-name">
+
+                        Challenges
+
+                    </span>
+
+
+                    <span
+                            class="progress-value"
+                            th:text="${challengeCount}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                            class="progress-bar"
+                            role="progressbar"
+                            th:style="'width:' +
+                            ${challengeCount > 10
+                            ? 100
+                            : challengeCount * 10} + '%'">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPLETED -->
+
+            <div class="progress-item mb-0">
+
+
+                <div class="progress-top">
+
+                    <span class="progress-name">
+
+                        Completed
+
+                    </span>
+
+
+                    <span
+                            class="progress-value"
+                            th:text="${completedChallengeCount}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                            class="progress-bar"
+                            role="progressbar"
+                            th:style="'width:' +
+                            ${completedChallengeCount > 10
+                            ? 100
+                            : completedChallengeCount * 10} + '%'">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ========================================================
+         ADMIN
+    ======================================================== -->
+
+    <div
+            th:if="${user.role.name() == 'ADMIN'}"
+            class="admin-card">
+
+
+        <div class="d-flex align-items-start gap-3">
+
+
+            <div
+                    class="feature-icon purple mb-0">
+
+                <i class="bi bi-shield-lock-fill"></i>
+
+            </div>
+
+
+            <div>
+
+
+                <h3 class="fw-bold mb-1">
+
+                    Admin Dashboard
+
+                </h3>
+
+
+                <p class="text-secondary mb-0">
+
+                    Manage users, challenges, fitness content,
+                    participants and activity logs.
+
+                </p>
+
+
+                <a
+                        href="/admin"
+                        class="admin-btn">
+
+                    <i class="bi bi-speedometer2 me-2"></i>
+
+                    Open Admin Panel
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

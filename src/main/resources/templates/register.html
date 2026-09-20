@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | FitTrack</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1050px;
+            min-height: 680px;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 42% 58%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        /* LEFT SIDE */
+
+        .left {
+            background: linear-gradient(145deg, #111827, #1f2937);
+            color: white;
+            padding: 55px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #7c3aed;
+        }
+
+        .left-content {
+            margin-top: 40px;
+        }
+
+        .left h1 {
+            font-size: 46px;
+            line-height: 1.08;
+            margin-bottom: 22px;
+        }
+
+        .left p {
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .features {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e5e7eb;
+            font-size: 15px;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(124, 58, 237, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-text {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* RIGHT SIDE */
+
+        .right {
+            padding: 45px 55px;
+            overflow-y: auto;
+        }
+
+        .form-header {
+            margin-bottom: 28px;
+        }
+
+        .form-header h2 {
+            font-size: 32px;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .message {
+            display: none;
+            padding: 13px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .message.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #dbe1ea;
+            border-radius: 11px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+            color: #111827;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.10);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .terms {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.5;
+            margin-top: 2px;
+        }
+
+        .submit-btn {
+            margin-top: 5px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #7c3aed, #9333ea);
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .login-link a {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 850px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .left {
+                display: none;
+            }
+
+            .right {
+                padding: 35px 25px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 18px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-header h2 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT SECTION -->
+
+    <div class="left">
+
+        <div class="logo">
+            Fit<span>Track</span>
+        </div>
+
+        <div class="left-content">
+
+            <h1>
+                Start your<br>
+                fitness journey.
+            </h1>
+
+            <p>
+                Track workouts, set goals, join challenges,
+                and build healthier habits with FitTrack.
+            </p>
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon">✓</div>
+                    Track your workouts
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">✓</div>
+                    Set and monitor fitness goals
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">✓</div>
+                    Join fitness challenges
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">✓</div>
+                    Monitor your progress
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-text">
+            Your progress. Your goals. Your journey.
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SECTION -->
+
+    <div class="right">
+
+        <div class="form-header">
+            <h2>Create your account</h2>
+            <p>Enter your details to get started with FitTrack.</p>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <form id="registerForm">
+
+            <div class="field">
+
+                <label for="name">Full Name</label>
+
+                <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="email">Email Address</label>
+
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        required>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="field">
+
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create password"
+                                minlength="6"
+                                required>
+
+                        <button
+                                type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('password', this)">
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="confirmPassword">Confirm Password</label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Repeat password"
+                                minlength="6"
+                                required>
+
+                        <button
+                                type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('confirmPassword', this)">
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="field">
+
+                    <label for="age">Age</label>
+
+                    <input
+                            type="number"
+                            id="age"
+                            name="age"
+                            min="10"
+                            max="100"
+                            placeholder="e.g. 20"
+                            required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="fitnessGoal">Fitness Goal</label>
+
+                    <select id="fitnessGoal" name="fitnessGoal" required>
+
+                        <option value="">Select goal</option>
+                        <option value="Weight Loss">Weight Loss</option>
+                        <option value="Muscle Gain">Muscle Gain</option>
+                        <option value="General Fitness">General Fitness</option>
+                        <option value="Strength">Strength</option>
+                        <option value="Endurance">Endurance</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="field">
+
+                    <label for="height">Height (cm)</label>
+
+                    <input
+                            type="number"
+                            id="height"
+                            name="height"
+                            step="0.1"
+                            min="50"
+                            max="250"
+                            placeholder="e.g. 175"
+                            required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="weight">Weight (kg)</label>
+
+                    <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            step="0.1"
+                            min="20"
+                            max="300"
+                            placeholder="e.g. 65"
+                            required>
+
+                </div>
+
+            </div>
+
+
+            <div class="terms">
+                By creating an account, you agree to use FitTrack
+                responsibly and provide accurate information.
+            </div>
+
+
+            <button
+                    type="submit"
+                    class="submit-btn"
+                    id="submitBtn">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+
+        <div class="login-link">
+
+            Already have an account?
+            <a href="/login">Login here</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // ===============================
+    // PASSWORD VISIBILITY
+    // ===============================
+
+    function togglePassword(fieldId, button) {
+
+        const field = document.getElementById(fieldId);
+
+        if (field.type === "password") {
+
+            field.type = "text";
+            button.textContent = "Hide";
+
+        } else {
+
+            field.type = "password";
+            button.textContent = "Show";
+
+        }
+    }
+
+
+    // ===============================
+    // MESSAGE
+    // ===============================
+
+    function showMessage(message, type) {
+
+        const messageBox = document.getElementById("message");
+
+        messageBox.textContent = message;
+
+        messageBox.className = "message " + type;
+
+    }
+
+
+    // ===============================
+    // REGISTRATION
+    // ===============================
+
+    document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            const submitButton =
+                document.getElementById("submitBtn");
+
+            const name =
+                document.getElementById("name").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            const age =
+                document.getElementById("age").value;
+
+            const height =
+                document.getElementById("height").value;
+
+            const weight =
+                document.getElementById("weight").value;
+
+            const fitnessGoal =
+                document.getElementById("fitnessGoal").value;
+
+
+            // ===============================
+            // VALIDATION
+            // ===============================
+
+            if (password !== confirmPassword) {
+
+                showMessage(
+                    "Passwords do not match.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (password.length < 6) {
+
+                showMessage(
+                    "Password must contain at least 6 characters.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (!name || !email || !age ||
+                !height || !weight || !fitnessGoal) {
+
+                showMessage(
+                    "Please fill in all required fields.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            // ===============================
+            // DISABLE BUTTON
+            // ===============================
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Creating Account...";
+
+
+            try {
+
+                // ===============================
+                // SEND DATA TO SPRING BOOT
+                // ===============================
+
+                const response = await fetch(
+                    "/api/users/register",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            name: name,
+
+                            email: email,
+
+                            password: password,
+
+                            age: parseInt(age),
+
+                            height: parseFloat(height),
+
+                            weight: parseFloat(weight),
+
+                            fitnessGoal: fitnessGoal
+
+                        })
+                    }
+                );
+
+
+                // ===============================
+                // READ SERVER RESPONSE
+                // ===============================
+
+                const result =
+                    await response.text();
+
+
+                console.log(
+                    "Registration status:",
+                    response.status
+                );
+
+                console.log(
+                    "Registration response:",
+                    result
+                );
+
+
+                // ===============================
+                // FAILED REQUEST
+                // ===============================
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result ||
+                        "Registration failed."
+                    );
+                }
+
+
+                // ===============================
+                // SUCCESS
+                // ===============================
+
+                showMessage(
+                    "Account created successfully! Redirecting to login...",
+                    "success"
+                );
+
+
+                document
+                    .getElementById("registerForm")
+                    .reset();
+
+
+                setTimeout(function () {
+
+                    window.location.href = "/login";
+
+                }, 1500);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Registration error:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Something went wrong while creating your account.",
+                    "error"
+                );
+
+
+                submitButton.disabled = false;
+
+                submitButton.textContent =
+                    "Create Account";
+            }
+
+        });
+
+</script>
+
+</body>
+</html>

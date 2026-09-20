@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Challenges - FitTrack</title>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background:
+                    radial-gradient(circle at 5% 20%, rgba(124, 77, 255, 0.10), transparent 18%),
+                    radial-gradient(circle at 95% 75%, rgba(0, 174, 255, 0.10), transparent 20%),
+                    #f7f9ff;
+            color: #182747;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+            "Segoe UI", sans-serif;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .fit-navbar {
+            min-height: 76px;
+            background: linear-gradient(
+                    100deg,
+                    #17243f,
+                    #202f50
+            );
+            box-shadow: 0 5px 25px rgba(20, 30, 60, 0.15);
+        }
+
+        .brand {
+            color: white !important;
+            font-size: 27px;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-icon {
+            color: #9b63ff;
+            margin-right: 8px;
+        }
+
+        .nav-link-custom {
+            color: #dce4f5;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 13px;
+            margin: 0 3px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-link-custom:hover,
+        .nav-link-custom.active {
+            color: white;
+            background: rgba(124, 77, 255, 0.28);
+        }
+
+        .logout-btn {
+            border: none;
+            background: linear-gradient(
+                    135deg,
+                    #ff5a6d,
+                    #ff465b
+            );
+            color: white;
+            border-radius: 12px;
+            padding: 10px 18px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 55px 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 52px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin: 0;
+        }
+
+        .page-subtitle {
+            margin-top: 8px;
+            font-size: 20px;
+            color: #60708e;
+        }
+
+        .quote-card {
+            background: linear-gradient(
+                    135deg,
+                    #f0e9ff,
+                    #eee8ff
+            );
+            border-radius: 24px;
+            padding: 22px 30px;
+            max-width: 390px;
+            color: #38227e;
+        }
+
+        .quote-icon {
+            font-size: 30px;
+            color: #6742d8;
+        }
+
+        .quote-text {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* =====================================================
+           CHALLENGE CARD
+        ===================================================== */
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(225, 230, 242, 0.8);
+            border-radius: 28px;
+            padding: 30px 35px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 45px rgba(40, 50, 90, 0.08);
+        }
+
+        .challenge-heading {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin-bottom: 25px;
+        }
+
+        .challenge-icon {
+            min-width: 78px;
+            height: 78px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            color: #7045df;
+            background: linear-gradient(
+                    135deg,
+                    #f0e5ff,
+                    #e7dcff
+            );
+        }
+
+        .challenge-title {
+            font-size: 30px;
+            font-weight: 750;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .challenge-description {
+            color: #667693;
+            font-size: 17px;
+            margin: 4px 0 0;
+        }
+
+        /* =====================================================
+           INFO BOXES
+        ===================================================== */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            border-radius: 20px;
+            padding: 20px;
+            min-height: 90px;
+        }
+
+        .info-box.target {
+            background: #fff1f4;
+        }
+
+        .info-box.start {
+            background: #eefbf7;
+        }
+
+        .info-box.end {
+            background: #fff1f2;
+        }
+
+        .info-box.status {
+            background: #edf5ff;
+        }
+
+        .info-label {
+            display: block;
+            color: #53627d;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 19px;
+            font-weight: 750;
+            color: #192746;
+        }
+
+        .info-icon {
+            font-size: 23px;
+            margin-right: 7px;
+        }
+
+        .target .info-icon {
+            color: #ff5168;
+        }
+
+        .start .info-icon {
+            color: #17b987;
+        }
+
+        .end .info-icon {
+            color: #ff596b;
+        }
+
+        .status .info-icon {
+            color: #4285f4;
+        }
+
+        /* =====================================================
+           PROGRESS
+        ===================================================== */
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-title {
+            font-size: 20px;
+            font-weight: 750;
+        }
+
+        .progress-numbers {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .percentage {
+            color: #1769ff;
+            margin-left: 25px;
+            font-size: 21px;
+        }
+
+        .modern-progress {
+            height: 25px;
+            border-radius: 20px;
+            background: #e8ecf3;
+            overflow: hidden;
+        }
+
+        .modern-progress-bar {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(
+                    90deg,
+                    #9347ff,
+                    #087dff
+            );
+            transition: width 0.5s ease;
+        }
+
+        /* =====================================================
+           MOTIVATION
+        ===================================================== */
+
+        .motivation {
+            margin-top: 22px;
+            padding: 18px 25px;
+            border-radius: 18px;
+            background: linear-gradient(
+                    90deg,
+                    #f1edff,
+                    #f0f4ff
+            );
+            color: #7542e7;
+            font-size: 18px;
+            font-weight: 650;
+        }
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .action-row {
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr 0.8fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .progress-input {
+            height: 58px;
+            border-radius: 15px;
+            border: 1px solid #ccd4e3;
+            padding: 0 18px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .progress-input:focus {
+            border-color: #7447e7;
+            box-shadow: 0 0 0 4px rgba(116, 71, 231, 0.10);
+        }
+
+        .update-btn {
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            background: linear-gradient(
+                    135deg,
+                    #7541ed,
+                    #168cff
+            );
+            transition: 0.2s;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(94, 66, 230, 0.25);
+        }
+
+        .leave-btn {
+            border: 2px solid #ff4d59;
+            border-radius: 15px;
+            background: white;
+            color: #ff424f;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .leave-btn:hover {
+            background: #fff1f2;
+        }
+
+        /* =====================================================
+           CONSISTENCY CARD
+        ===================================================== */
+
+        .consistency-card {
+            background: linear-gradient(
+                    100deg,
+                    #e9fff6,
+                    #f1fff9
+            );
+            border-radius: 28px;
+            padding: 28px 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 35px rgba(35, 150, 110, 0.06);
+        }
+
+        .consistency-left {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .leaf-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #d7faea;
+            color: #18b87d;
+            font-size: 32px;
+        }
+
+        .consistency-title {
+            color: #128364;
+            font-size: 23px;
+            font-weight: 750;
+            margin: 0;
+        }
+
+        .consistency-text {
+            color: #4e7880;
+            font-size: 17px;
+            margin-top: 5px;
+        }
+
+        .you-can-btn {
+            background: white;
+            border: 1px solid #d8eee7;
+            border-radius: 30px;
+            padding: 13px 25px;
+            color: #297665;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-card {
+            text-align: center;
+            padding: 70px 30px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(30, 40, 80, 0.07);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            color: #7541ed;
+            margin-bottom: 15px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .quote-card {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-row {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .main-container {
+                padding: 30px 15px;
+            }
+
+            .page-title {
+                font-size: 38px;
+            }
+
+            .challenge-card {
+                padding: 22px;
+            }
+
+            .challenge-heading {
+                align-items: flex-start;
+            }
+
+            .challenge-title {
+                font-size: 24px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .percentage {
+                margin-left: 10px;
+            }
+
+            .consistency-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .nav-link-custom {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+
+<nav class="navbar navbar-expand-lg fit-navbar">
+
+    <div class="container-fluid px-4">
+
+        <a
+                class="brand"
+                href="/dashboard">
+
+            <i class="bi bi-universal-access-circle brand-icon"></i>
+
+            FitTrack
+
+        </a>
+
+
+        <div class="d-flex align-items-center">
+
+            <a
+                    href="/dashboard"
+                    class="nav-link-custom">
+
+                <i class="bi bi-grid-1x2"></i>
+                Dashboard
+
+            </a>
+
+
+            <a
+                    href="/workouts"
+                    class="nav-link-custom">
+
+                <i class="bi bi-lightning-charge"></i>
+                Workouts
+
+            </a>
+
+
+            <a
+                    href="/challenges"
+                    class="nav-link-custom active">
+
+                <i class="bi bi-trophy"></i>
+                Challenges
+
+            </a>
+
+
+            <a
+                    href="/content"
+                    class="nav-link-custom">
+
+                <i class="bi bi-play-circle"></i>
+                Fitness Content
+
+            </a>
+
+
+            <a
+                    href="/logout"
+                    class="logout-btn ms-3">
+
+                <i class="bi bi-box-arrow-right"></i>
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ============================================================
+     MAIN
+============================================================ -->
+
+<main class="main-container">
+
+
+    <!-- ========================================================
+         HEADER
+    ========================================================= -->
+
+    <section class="page-header">
+
+        <div>
+
+            <h1 class="page-title">
+                My Challenges
+            </h1>
+
+            <p class="page-subtitle">
+                Track your progress and stay consistent 💪
+            </p>
+
+        </div>
+
+
+        <div class="quote-card">
+
+            <div class="quote-icon">
+                <i class="bi bi-quote"></i>
+            </div>
+
+            <div class="quote-text">
+
+                “Small steps every day
+                lead to big results.”
+
+            </div>
+
+            <small>
+                — FitTrack
+            </small>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================
+         CHALLENGES
+    ========================================================= -->
+
+    <div
+            th:if="${myChallenges != null && !#lists.isEmpty(myChallenges)}">
+
+        <div
+                class="challenge-card"
+                th:each="participant : ${myChallenges}">
+
+
+            <!-- ==================================================
+                 CHALLENGE HEADER
+            ================================================== -->
+
+            <div class="challenge-heading">
+
+                <div class="challenge-icon">
+
+                    <i class="bi bi-person-running"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2
+                            class="challenge-title"
+                            th:text="${participant.challenge.title}">
+
+                        30 Days Workout Challenges
+
+                    </h2>
+
+                    <p
+                            class="challenge-description"
+                            th:text="${participant.challenge.description}">
+
+                        Workout non-stop for 30 days.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 INFO
+            ================================================== -->
+
+            <div class="info-grid">
+
+
+                <!-- TARGET -->
+
+                <div class="info-box target">
+
+                    <span class="info-label">
+
+                        <i class="bi bi-bullseye info-icon"></i>
+
+                        Target
+
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${participant.challenge.target}">
+
+                        30.0
+
+                    </span>
+
+                </div>
+
+
+                <!-- START -->
+
+                <div class="info-box start">
+
+                    <span class="info-label">
+
+                        <i class="bi bi-calendar-check info-icon"></i>
+
+                        Start
+
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${participant.challenge.startDate}">
+
+                        2026-09-19
+
+                    </span>
+
+                </div>
+
+
+                <!-- END -->
+
+                <div class="info-box end">
+
+                    <span class="info-label">
+
+                        <i class="bi bi-calendar-x info-icon"></i>
+
+                        End
+
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${participant.challenge.endDate}">
+
+                        2026-10-19
+
+                    </span>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="info-box status">
+
+                    <span class="info-label">
+
+                        <i class="bi bi-people info-icon"></i>
+
+                        Status
+
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${participant.status}">
+
+                        JOINED
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PROGRESS HEADER
+            ================================================== -->
+
+            <div class="progress-header">
+
+                <div class="progress-title">
+                    Your Progress
+                </div>
+
+
+                <div>
+
+                    <span
+                            class="progress-numbers"
+                            th:text="${participant.progress} + ' / ' + ${participant.challenge.target}">
+
+                        20.0 / 30.0
+
+                    </span>
+
+
+                    <span
+                            class="percentage"
+
+                            th:text="${participant.challenge.target != null && participant.challenge.target > 0 ? T(java.lang.Math).min(100.0, (participant.progress / participant.challenge.target) * 100.0) : 0.0} + '%'">
+
+                        66.67%
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PROGRESS BAR
+            ================================================== -->
+
+            <div class="modern-progress">
+
+                <div
+                        class="modern-progress-bar"
+
+                        th:style="|width: ${participant.challenge.target != null && participant.challenge.target > 0 ? T(java.lang.Math).min(100.0, (participant.progress / participant.challenge.target) * 100.0) : 0.0}%|">
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 MOTIVATION
+            ================================================== -->
+
+            <div class="motivation">
+
+                <i class="bi bi-stars me-2"></i>
+
+                You're doing great! Keep going!
+
+            </div>
+
+
+            <!-- ==================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="action-row">
+
+
+                <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+
+                        class="progress-input"
+
+                        th:id="'progress-' + ${participant.id}"
+
+                        th:value="${participant.progress}"
+
+                        placeholder="Enter new progress (e.g. 25)">
+
+
+                <button
+                        type="button"
+                        class="update-btn"
+
+                        th:attr="onclick=|updateProgress(${participant.id})|">
+
+                    <i class="bi bi-send-fill me-2"></i>
+
+                    Update Progress
+
+                </button>
+
+
+                <button
+                        type="button"
+                        class="leave-btn"
+
+                        th:attr="onclick=|leaveChallenge(${participant.id})|">
+
+                    <i class="bi bi-box-arrow-right me-2"></i>
+
+                    Leave Challenge
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         EMPTY STATE
+    ========================================================= -->
+
+    <div
+            th:if="${myChallenges == null || #lists.isEmpty(myChallenges)}"
+            class="empty-card">
+
+        <div class="empty-icon">
+
+            <i class="bi bi-trophy"></i>
+
+        </div>
+
+        <h2>
+            No challenges yet
+        </h2>
+
+        <p class="text-muted mb-4">
+
+            Join a challenge and start building your streak.
+
+        </p>
+
+        <a
+                href="/challenges"
+                class="btn btn-primary">
+
+            Explore Challenges
+
+        </a>
+
+    </div>
+
+
+    <!-- ========================================================
+         CONSISTENCY CARD
+    ========================================================= -->
+
+    <div
+            th:if="${myChallenges != null && !#lists.isEmpty(myChallenges)}"
+            class="consistency-card mt-4">
+
+        <div class="consistency-left">
+
+            <div class="leaf-icon">
+
+                <i class="bi bi-leaf-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3 class="consistency-title">
+                    Stay Consistent!
+                </h3>
+
+                <div class="consistency-text">
+
+                    Discipline today, a stronger you tomorrow. 🌱
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="you-can-btn">
+
+            <i class="bi bi-heart-fill me-2"></i>
+
+            You can do it!
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    const loggedInUserId =
+        /*[[${user.id}]]*/ 0;
+
+
+    /* ============================================================
+       UPDATE PROGRESS
+    ============================================================ */
+
+    async function updateProgress(participationId) {
+
+        const input =
+            document.getElementById(
+                "progress-" + participationId
+            );
+
+
+        if (!input) {
+
+            alert("Progress input not found.");
+
+            return;
+        }
+
+
+        const progressText =
+            input.value;
+
+
+        if (
+            progressText === null ||
+            progressText.trim() === ""
+        ) {
+
+            alert("Please enter progress.");
+
+            return;
+        }
+
+
+        const progress =
+            Number(progressText);
+
+
+        if (isNaN(progress)) {
+
+            alert("Please enter a valid number.");
+
+            return;
+        }
+
+
+        if (progress < 0) {
+
+            alert("Progress cannot be negative.");
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+
+                `/api/challenge-participants/${participationId}/user/${loggedInUserId}/progress`,
+
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(progress)
+                }
+            );
+
+
+            if (!response.ok) {
+
+                const errorText =
+                    await response.text();
+
+                throw new Error(
+                    errorText ||
+                    "Failed to update progress."
+                );
+            }
+
+
+            alert(
+                "Progress updated successfully!"
+            );
+
+
+            location.reload();
+
+
+        } catch (error) {
+
+            console.error(
+                "Progress update error:",
+                error
+            );
+
+
+            alert(
+                "Error updating progress: " +
+                error.message
+            );
+        }
+    }
+
+
+    /* ============================================================
+       LEAVE CHALLENGE
+    ============================================================ */
+
+    async function leaveChallenge(
+        participationId
+    ) {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to leave this challenge?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+
+                `/api/challenge-participants/${participationId}/user/${loggedInUserId}`,
+
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+            if (!response.ok) {
+
+                const errorText =
+                    await response.text();
+
+                throw new Error(
+                    errorText ||
+                    "Failed to leave challenge."
+                );
+            }
+
+
+            alert(
+                "You have left the challenge."
+            );
+
+
+            location.reload();
+
+
+        } catch (error) {
+
+            console.error(
+                "Leave challenge error:",
+                error
+            );
+
+
+            alert(
+                "Error leaving challenge: " +
+                error.message
+            );
+        }
+    }
+
+
+    /*]]>*/
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,2712 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard • FitTrack</title>
+
+    <!-- Bootstrap -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet">
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        :root {
+            --primary: #7046e8;
+            --primary-light: #eee8ff;
+            --blue: #1677ff;
+            --green: #19b887;
+            --red: #ff5364;
+            --orange: #ffad32;
+
+            --dark: #17233d;
+            --muted: #6d7b94;
+
+            --bg: #f6f8fd;
+            --card: #ffffff;
+
+            --border: #e4e8f1;
+
+            --shadow:
+                    0 12px 40px rgba(30, 45, 80, 0.08);
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                    Inter,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+
+            background:
+
+                    radial-gradient(
+                            circle at 0% 10%,
+                            rgba(112, 70, 232, 0.10),
+                            transparent 20%
+                    ),
+
+                    radial-gradient(
+                            circle at 100% 80%,
+                            rgba(22, 119, 255, 0.08),
+                            transparent 20%
+                    ),
+
+                    var(--bg);
+
+            color: var(--dark);
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .admin-navbar {
+
+            min-height: 76px;
+
+            background:
+                    linear-gradient(
+                            105deg,
+                            #15213a,
+                            #26385f
+                    );
+
+            box-shadow:
+                    0 5px 25px rgba(20, 30, 60, 0.16);
+
+        }
+
+
+        .brand {
+
+            color: white !important;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+        }
+
+
+        .brand i {
+
+            color: #a56cff;
+
+            margin-right: 8px;
+
+        }
+
+
+        .navbar-btn {
+
+            color: #dce4f5;
+
+            text-decoration: none;
+
+            padding: 10px 16px;
+
+            border-radius: 12px;
+
+            margin-left: 5px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .navbar-btn:hover {
+
+            background: rgba(
+                    112,
+                    70,
+                    232,
+                    0.25
+            );
+
+            color: white;
+
+        }
+
+
+        .logout-btn {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #ff6877,
+                            #ff465a
+                    );
+
+            color: white;
+
+            border-radius: 12px;
+
+            padding: 10px 17px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page-container {
+
+            max-width: 1400px;
+
+            margin: auto;
+
+            padding: 45px 25px 70px;
+
+        }
+
+
+        .page-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 25px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .page-title {
+
+            font-size: 48px;
+
+            font-weight: 850;
+
+            letter-spacing: -1.8px;
+
+            margin: 0;
+
+        }
+
+
+        .page-subtitle {
+
+            margin-top: 8px;
+
+            color: var(--muted);
+
+            font-size: 18px;
+
+        }
+
+
+        .header-card {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eee7ff,
+                            #edf4ff
+                    );
+
+            color: #4d31a0;
+
+            border-radius: 22px;
+
+            padding: 20px 25px;
+
+            min-width: 270px;
+
+        }
+
+
+        .header-card i {
+
+            font-size: 28px;
+
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 23px;
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .stat-icon {
+
+            width: 55px;
+
+            height: 55px;
+
+            border-radius: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .purple {
+
+            background: #eee8ff;
+
+            color: var(--primary);
+
+        }
+
+
+        .blue {
+
+            background: #e8f2ff;
+
+            color: var(--blue);
+
+        }
+
+
+        .green {
+
+            background: #e6faf3;
+
+            color: var(--green);
+
+        }
+
+
+        .orange {
+
+            background: #fff3df;
+
+            color: #e89519;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 32px;
+
+            font-weight: 850;
+
+        }
+
+
+        .stat-label {
+
+            color: var(--muted);
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        .section-card {
+
+            background: rgba(
+                    255,
+                    255,
+                    255,
+                    0.96
+            );
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 25px;
+
+            padding: 28px;
+
+            box-shadow: var(--shadow);
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .section-title {
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+            margin: 0;
+
+        }
+
+
+        .section-title i {
+
+            color: var(--primary);
+
+            margin-right: 8px;
+
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-label {
+
+            font-weight: 650;
+
+        }
+
+
+        .form-control,
+        .form-select {
+
+            border:
+                    1px solid #d8deea;
+
+            border-radius: 13px;
+
+            padding: 12px 14px;
+
+        }
+
+
+        .form-control:focus,
+        .form-select:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                    0 0 0 4px
+                    rgba(
+                            112,
+                            70,
+                            232,
+                            0.10
+                    );
+
+        }
+
+
+        .gradient-btn {
+
+            border: none;
+
+            color: white;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            var(--primary),
+                            var(--blue)
+                    );
+
+            border-radius: 13px;
+
+            padding: 12px 20px;
+
+            font-weight: 700;
+
+            box-shadow:
+                    0 8px 20px
+                    rgba(
+                            90,
+                            65,
+                            220,
+                            0.20
+                    );
+
+            transition: 0.2s;
+
+        }
+
+
+        .gradient-btn:hover {
+
+            transform: translateY(-2px);
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-container {
+
+            overflow-x: auto;
+
+        }
+
+
+        .modern-table {
+
+            width: 100%;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+        }
+
+
+        .modern-table thead th {
+
+            background: #202a3a;
+
+            color: white;
+
+            padding: 15px;
+
+            font-weight: 650;
+
+            white-space: nowrap;
+
+        }
+
+
+        .modern-table thead th:first-child {
+
+            border-radius: 12px 0 0 0;
+
+        }
+
+
+        .modern-table thead th:last-child {
+
+            border-radius: 0 12px 0 0;
+
+        }
+
+
+        .modern-table tbody td {
+
+            padding: 16px 15px;
+
+            border-bottom:
+                    1px solid var(--border);
+
+            vertical-align: middle;
+
+        }
+
+
+        .modern-table tbody tr:hover {
+
+            background: #fafbff;
+
+        }
+
+
+        /* =====================================================
+           BADGES
+        ===================================================== */
+
+        .status-badge {
+
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 999px;
+
+            background: var(--primary-light);
+
+            color: #5b35ce;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .action-btn {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 8px 12px;
+
+            font-weight: 600;
+
+            margin: 2px;
+
+        }
+
+
+        .btn-participants {
+
+            background: #dff6ff;
+
+            color: #087ca6;
+
+        }
+
+
+        .btn-edit {
+
+            background: #fff0c9;
+
+            color: #9a6800;
+
+        }
+
+
+        .btn-delete {
+
+            background: #ffe4e7;
+
+            color: #d93247;
+
+        }
+
+
+        .btn-approve {
+
+            background: #ddf8ed;
+
+            color: #11855f;
+
+        }
+
+
+        .btn-reject {
+
+            background: #ffe4e7;
+
+            color: #d93247;
+
+        }
+
+
+        /* =====================================================
+           PARTICIPANTS
+        ===================================================== */
+
+        #participantsSection {
+
+            display: none;
+
+            animation:
+                    fadeIn 0.25s ease;
+
+        }
+
+
+        @keyframes fadeIn {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(8px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 45px;
+
+            color: var(--muted);
+
+        }
+
+
+        .empty i {
+
+            font-size: 42px;
+
+            color: #a8b1c4;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .page-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .page-container {
+
+                padding:
+                        30px 14px;
+
+            }
+
+
+            .page-title {
+
+                font-size: 36px;
+
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .section-card {
+
+                padding: 20px;
+
+            }
+
+
+            .navbar-btn {
+
+                display: none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+
+<nav class="navbar navbar-dark admin-navbar">
+
+    <div class="container-fluid px-4">
+
+        <a
+                href="/admin"
+                class="brand">
+
+            <i class="bi bi-shield-check"></i>
+
+            FitTrack Admin
+
+        </a>
+
+
+        <div>
+
+            <a
+                    href="/dashboard"
+                    class="navbar-btn">
+
+                <i class="bi bi-grid-1x2"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                    href="/logout"
+                    class="logout-btn">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ============================================================
+     PAGE
+============================================================ -->
+
+<main class="page-container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1 class="page-title">
+
+                Admin Dashboard
+
+            </h1>
+
+            <p class="page-subtitle">
+
+                Manage your FitTrack community from one place.
+
+            </p>
+
+        </div>
+
+
+        <div class="header-card">
+
+            <i class="bi bi-stars"></i>
+
+            <div class="fw-bold mt-2">
+
+                Control Center
+
+            </div>
+
+            <small>
+
+                Manage • Monitor • Improve
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         QUICK STATS
+    ========================================================= -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+
+                <i class="bi bi-people-fill"></i>
+
+            </div>
+
+            <div
+                    class="stat-number"
+                    th:text="${users != null ? #lists.size(users) : 0}">
+
+                0
+
+            </div>
+
+            <div class="stat-label">
+
+                Registered Users
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+
+                <i class="bi bi-trophy-fill"></i>
+
+            </div>
+
+            <div
+                    class="stat-number"
+                    th:text="${challenges != null ? #lists.size(challenges) : 0}">
+
+                0
+
+            </div>
+
+            <div class="stat-label">
+
+                Challenges
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+
+                <i class="bi bi-hourglass-split"></i>
+
+            </div>
+
+            <div
+                    class="stat-number"
+                    th:text="${pendingContent != null ? #lists.size(pendingContent) : 0}">
+
+                0
+
+            </div>
+
+            <div class="stat-label">
+
+                Pending Content
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+
+                <i class="bi bi-activity"></i>
+
+            </div>
+
+            <div
+                    class="stat-number"
+                    th:text="${activityLogs != null ? #lists.size(activityLogs) : 0}">
+
+                0
+
+            </div>
+
+            <div class="stat-label">
+
+                Activity Records
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         CREATE CHALLENGE
+    ========================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Create Challenge
+
+            </h2>
+
+        </div>
+
+
+        <form id="challengeForm">
+
+            <div class="row g-3">
+
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Challenge Title
+
+                    </label>
+
+                    <input
+                            id="challengeTitle"
+                            class="form-control"
+                            placeholder="30 Days Workout Challenge"
+                            required>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        Target
+
+                    </label>
+
+                    <input
+                            id="challengeTarget"
+                            type="number"
+                            step="0.01"
+                            class="form-control"
+                            placeholder="30"
+                            required>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        Status
+
+                    </label>
+
+                    <select
+                            id="challengeStatus"
+                            class="form-select">
+
+                        <option value="ACTIVE">
+                            ACTIVE
+                        </option>
+
+                        <option value="UPCOMING">
+                            UPCOMING
+                        </option>
+
+                        <option value="COMPLETED">
+                            COMPLETED
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-12">
+
+                    <label class="form-label">
+
+                        Description
+
+                    </label>
+
+                    <textarea
+                            id="challengeDescription"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Describe the challenge..."
+                            required></textarea>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Start Date
+
+                    </label>
+
+                    <input
+                            id="challengeStartDate"
+                            type="date"
+                            class="form-control"
+                            required>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        End Date
+
+                    </label>
+
+                    <input
+                            id="challengeEndDate"
+                            type="date"
+                            class="form-control"
+                            required>
+
+                </div>
+
+            </div>
+
+
+            <button
+                    type="submit"
+                    class="gradient-btn mt-4">
+
+                <i class="bi bi-plus-lg me-2"></i>
+
+                Create Challenge
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ========================================================
+         CHALLENGES
+    ========================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+
+                <i class="bi bi-trophy"></i>
+
+                Manage Challenges
+
+            </h2>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table class="modern-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Challenge</th>
+
+                    <th>Target</th>
+
+                    <th>Duration</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr
+                        th:each="c : ${challenges}">
+
+
+                    <td
+                            th:text="${c.id}">
+
+                        1
+
+                    </td>
+
+
+                    <td>
+
+                        <strong
+                                th:text="${c.title}">
+
+                            Challenge
+
+                        </strong>
+
+                    </td>
+
+
+                    <td
+                            th:text="${c.target}">
+
+                        30
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                th:text="${c.startDate}">
+
+                            2026-09-19
+
+                        </span>
+
+                        →
+
+                        <span
+                                th:text="${c.endDate}">
+
+                            2026-10-19
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                class="status-badge"
+                                th:text="${c.status}">
+
+                            ACTIVE
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                                class="action-btn btn-participants"
+                                th:onclick="|showParticipants(${c.id})|">
+
+                            <i class="bi bi-people"></i>
+
+                            Participants
+
+                        </button>
+
+
+                        <button
+                                class="action-btn btn-edit"
+                                th:onclick="|editChallenge(${c.id})|">
+
+                            <i class="bi bi-pencil"></i>
+
+                            Edit
+
+                        </button>
+
+
+                        <button
+                                class="action-btn btn-delete"
+                                th:onclick="|deleteChallenge(${c.id})|">
+
+                            <i class="bi bi-trash"></i>
+
+                            Delete
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+
+                <tr
+                        th:if="${challenges == null || #lists.isEmpty(challenges)}">
+
+                    <td
+                            colspan="6"
+                            class="empty">
+
+                        <i class="bi bi-trophy d-block"></i>
+
+                        No challenges available.
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         PARTICIPANTS
+    ========================================================= -->
+
+    <div
+            id="participantsSection"
+            class="section-card">
+
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+
+                <i class="bi bi-people"></i>
+
+                Challenge Participants
+
+            </h2>
+
+
+            <button
+                    class="btn btn-secondary rounded-3"
+                    onclick="closeParticipants()">
+
+                <i class="bi bi-x-lg"></i>
+
+                Close
+
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table class="modern-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>User</th>
+
+                    <th>Email</th>
+
+                    <th>Progress</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="participantsBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         USERS
+    ========================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+
+                <i class="bi bi-people-fill"></i>
+
+                User Management
+
+            </h2>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table class="modern-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Role</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr
+                        th:each="u : ${users}">
+
+
+                    <td
+                            th:text="${u.id}">
+
+                        1
+
+                    </td>
+
+
+                    <td>
+
+                        <strong
+                                th:text="${u.name}">
+
+                            User
+
+                        </strong>
+
+                    </td>
+
+
+                    <td
+                            th:text="${u.email}">
+
+                        user@example.com
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                class="status-badge"
+                                th:text="${u.role}">
+
+                            USER
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                                th:if="${u.role.name() != 'ADMIN'}"
+
+                                class="action-btn btn-delete"
+
+                                th:onclick="|deleteUser(${u.id})|">
+
+                            <i class="bi bi-trash"></i>
+
+                            Delete
+
+                        </button>
+
+
+                        <span
+                                th:if="${u.role.name() == 'ADMIN'}"
+                                class="text-muted">
+
+                            Protected
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         PENDING CONTENT
+    ========================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+
+                <i class="bi bi-hourglass-split"></i>
+
+                Pending Fitness Content
+
+            </h2>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table class="modern-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>Title</th>
+
+                    <th>Category</th>
+
+                    <th>Submitted By</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr
+                        th:each="c : ${pendingContent}">
+
+
+                    <td>
+
+                        <strong
+                                th:text="${c.title}">
+
+                            Fitness Article
+
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                class="status-badge"
+                                th:text="${c.category}">
+
+                            Workout
+
+                        </span>
+
+                    </td>
+
+
+                    <td
+                            th:text="${c.submittedBy != null ? c.submittedBy.name : 'Unknown'}">
+
+                        User
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                                class="action-btn btn-approve"
+                                th:onclick="|approveContent(${c.id})|">
+
+                            <i class="bi bi-check-lg"></i>
+
+                            Approve
+
+                        </button>
+
+
+                        <button
+                                class="action-btn btn-reject"
+                                th:onclick="|rejectContent(${c.id})|">
+
+                            <i class="bi bi-x-lg"></i>
+
+                            Reject
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+
+                <tr
+                        th:if="${pendingContent == null || #lists.isEmpty(pendingContent)}">
+
+                    <td
+                            colspan="4"
+                            class="empty">
+
+                        <i class="bi bi-check-circle d-block"></i>
+
+                        No pending content.
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         ACTIVITY LOGS
+    ========================================================= -->
+
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+
+                <i class="bi bi-activity"></i>
+
+                Activity Logs
+
+            </h2>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table class="modern-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>User</th>
+
+                    <th>Action</th>
+
+                    <th>Time</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr
+                        th:each="l : ${activityLogs}">
+
+                    <td
+                            th:text="${l.id}">
+
+                        1
+
+                    </td>
+
+
+                    <td
+                            th:text="${l.user != null ? l.user.name : 'System'}">
+
+                        User
+
+                    </td>
+
+
+                    <td
+                            th:text="${l.action}">
+
+                        Activity
+
+                    </td>
+
+
+                    <td
+                            th:text="${l.timestamp}">
+
+                        Time
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+
+<script>
+
+
+    /* ============================================================
+       CREATE CHALLENGE
+    ============================================================ */
+
+    document
+        .getElementById("challengeForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const body = {
+
+                    title:
+                    document
+                        .getElementById("challengeTitle")
+                        .value,
+
+                    description:
+                    document
+                        .getElementById("challengeDescription")
+                        .value,
+
+                    target:
+                        Number(
+                            document
+                                .getElementById("challengeTarget")
+                                .value
+                        ),
+
+                    startDate:
+                    document
+                        .getElementById("challengeStartDate")
+                        .value,
+
+                    endDate:
+                    document
+                        .getElementById("challengeEndDate")
+                        .value,
+
+                    status:
+                    document
+                        .getElementById("challengeStatus")
+                        .value
+                };
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/challenges",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify(body)
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            await response.text()
+                        );
+
+                    }
+
+
+                    alert(
+                        "Challenge created successfully!"
+                    );
+
+
+                    location.reload();
+
+
+                } catch(error) {
+
+                    alert(
+                        "Error creating challenge: " +
+                        error.message
+                    );
+
+                }
+
+            }
+        );
+
+
+    /* ============================================================
+       EDIT CHALLENGE
+    ============================================================ */
+
+    async function editChallenge(id) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/challenges/${id}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            const challenge =
+                await response.json();
+
+
+            const title =
+                prompt(
+                    "Challenge title:",
+                    challenge.title
+                );
+
+
+            if (title === null) {
+
+                return;
+
+            }
+
+
+            const description =
+                prompt(
+                    "Description:",
+                    challenge.description
+                );
+
+
+            if (description === null) {
+
+                return;
+
+            }
+
+
+            const target =
+                Number(
+                    prompt(
+                        "Target:",
+                        challenge.target
+                    )
+                );
+
+
+            if (isNaN(target)) {
+
+                alert(
+                    "Invalid target."
+                );
+
+                return;
+
+            }
+
+
+            const startDate =
+                prompt(
+                    "Start date (YYYY-MM-DD):",
+                    challenge.startDate
+                );
+
+
+            if (startDate === null) {
+
+                return;
+
+            }
+
+
+            const endDate =
+                prompt(
+                    "End date (YYYY-MM-DD):",
+                    challenge.endDate
+                );
+
+
+            if (endDate === null) {
+
+                return;
+
+            }
+
+
+            const status =
+                prompt(
+                    "Status:",
+                    challenge.status
+                );
+
+
+            if (status === null) {
+
+                return;
+
+            }
+
+
+            const updated = {
+
+                title,
+                description,
+                target,
+                startDate,
+                endDate,
+                status
+
+            };
+
+
+            const response2 =
+                await fetch(
+                    `/api/challenges/${id}`,
+                    {
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(updated)
+                    }
+                );
+
+
+            if (!response2.ok) {
+
+                throw new Error(
+                    await response2.text()
+                );
+
+            }
+
+
+            alert(
+                "Challenge updated successfully!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error updating challenge: " +
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       DELETE CHALLENGE
+    ============================================================ */
+
+    async function deleteChallenge(id) {
+
+        if (
+            !confirm(
+                "Delete this challenge and all its participants?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/challenges/${id}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            alert(
+                "Challenge deleted successfully!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error deleting challenge: " +
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       SHOW PARTICIPANTS
+    ============================================================ */
+
+    async function showParticipants(challengeId) {
+
+        const section =
+            document.getElementById(
+                "participantsSection"
+            );
+
+
+        const body =
+            document.getElementById(
+                "participantsBody"
+            );
+
+
+        section.style.display = "block";
+
+
+        body.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="6"
+                class="empty">
+
+                <div
+                    class="spinner-border text-primary">
+                </div>
+
+                <div class="mt-2">
+
+                    Loading participants...
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+        section.scrollIntoView({
+            behavior: "smooth"
+        });
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/challenge-participants/challenge/${challengeId}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            const participants =
+                await response.json();
+
+
+            if (
+                !participants ||
+                participants.length === 0
+            ) {
+
+                body.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="empty">
+
+                        <i class="bi bi-people d-block"></i>
+
+                        No participants yet.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+                return;
+
+            }
+
+
+            body.innerHTML =
+                participants
+                    .map(
+                        participant => `
+
+                    <tr>
+
+                        <td>
+                            ${participant.id}
+                        </td>
+
+                        <td>
+
+                            <strong>
+                                ${
+                            participant.user?.name
+                            || "Unknown"
+                        }
+                            </strong>
+
+                        </td>
+
+                        <td>
+                            ${
+                            participant.user?.email
+                            || "Unknown"
+                        }
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="status-badge">
+
+                                ${
+                            participant.progress
+                            ?? 0
+                        }
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="status-badge">
+
+                                ${
+                            participant.status
+                            || "JOINED"
+                        }
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="action-btn btn-edit"
+                                onclick="updateParticipantProgress(${participant.id})">
+
+                                <i class="bi bi-graph-up"></i>
+
+                                Progress
+
+                            </button>
+
+
+                            <button
+                                class="action-btn btn-participants"
+                                onclick="updateParticipantStatus(${participant.id})">
+
+                                <i class="bi bi-pencil"></i>
+
+                                Status
+
+                            </button>
+
+
+                            <button
+                                class="action-btn btn-delete"
+                                onclick="removeParticipant(${participant.id})">
+
+                                <i class="bi bi-person-x"></i>
+
+                                Remove
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `
+                    )
+                    .join("");
+
+
+        } catch(error) {
+
+            body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="text-danger p-4">
+
+                    Error loading participants:
+                    ${error.message}
+
+                </td>
+
+            </tr>
+
+        `;
+
+        }
+
+    }
+
+
+    /* ============================================================
+       CLOSE PARTICIPANTS
+    ============================================================ */
+
+    function closeParticipants() {
+
+        document
+            .getElementById(
+                "participantsSection"
+            )
+            .style.display = "none";
+
+    }
+
+
+    /* ============================================================
+       UPDATE PARTICIPANT PROGRESS
+    ============================================================ */
+
+    async function updateParticipantProgress(
+        participationId
+    ) {
+
+        const value =
+            Number(
+                prompt(
+                    "Enter new progress:"
+                )
+            );
+
+
+        if (
+            isNaN(value) ||
+            value < 0
+        ) {
+
+            alert(
+                "Enter a valid progress value."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/challenge-participants/${participationId}/progress`,
+                    {
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(value)
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            alert(
+                "Progress updated successfully!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error updating progress: " +
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       UPDATE PARTICIPANT STATUS
+    ============================================================ */
+
+    async function updateParticipantStatus(
+        participationId
+    ) {
+
+        const status =
+            prompt(
+                "Enter status:",
+                "JOINED"
+            );
+
+
+        if (!status) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/challenge-participants/${participationId}/status`,
+                    {
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(status)
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            alert(
+                "Status updated successfully!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error updating status: " +
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       REMOVE PARTICIPANT
+    ============================================================ */
+
+    async function removeParticipant(
+        participationId
+    ) {
+
+        if (
+            !confirm(
+                "Remove this participant from the challenge?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/challenge-participants/${participationId}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            alert(
+                "Participant removed successfully!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error removing participant: " +
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       DELETE USER
+    ============================================================ */
+
+    async function deleteUser(id) {
+
+        if (
+            !confirm(
+                "Delete this user permanently?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/admin/users/${id}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            alert(
+                "User deleted successfully!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error deleting user: " +
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       APPROVE CONTENT
+    ============================================================ */
+
+    async function approveContent(id) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/content/${id}/approve`,
+                    {
+                        method: "PUT"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            alert(
+                "Content approved!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error approving content: " +
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* ============================================================
+       REJECT CONTENT
+    ============================================================ */
+
+    async function rejectContent(id) {
+
+        if (
+            !confirm(
+                "Reject this fitness content?"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/content/${id}/reject`,
+                    {
+                        method: "PUT"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            alert(
+                "Content rejected!"
+            );
+
+
+            location.reload();
+
+
+        } catch(error) {
+
+            alert(
+                "Error rejecting content: " +
+                error.message
+            );
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

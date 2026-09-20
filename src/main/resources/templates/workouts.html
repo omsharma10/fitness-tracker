@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account • FitTrack</title>
+
+    <!-- Bootstrap -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet">
+
+
+    <style>
+
+        :root {
+
+            --primary: #7046e8;
+            --blue: #1677ff;
+            --green: #19b887;
+
+            --dark: #17233d;
+            --muted: #6d7b94;
+
+            --border: #dce1eb;
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            margin: 0;
+
+            font-family:
+                    Inter,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+
+            padding: 35px 20px;
+
+            background:
+
+                    radial-gradient(
+                            circle at 5% 10%,
+                            rgba(
+                                    112,
+                                    70,
+                                    232,
+                                    0.16
+                            ),
+                            transparent 25%
+                    ),
+
+                    radial-gradient(
+                            circle at 95% 90%,
+                            rgba(
+                                    22,
+                                    119,
+                                    255,
+                                    0.13
+                            ),
+                            transparent 25%
+                    ),
+
+                    #f5f7fc;
+
+        }
+
+
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
+
+        .register-wrapper {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                0.85fr
+                1.15fr;
+
+            background: white;
+
+            border-radius: 32px;
+
+            overflow: hidden;
+
+            box-shadow:
+                    0 25px 80px
+                    rgba(
+                            31,
+                            44,
+                            75,
+                            0.14
+                    );
+
+        }
+
+
+        /* =====================================================
+           LEFT SIDE
+        ===================================================== */
+
+        .info-section {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 50px;
+
+            color: white;
+
+            background:
+                    linear-gradient(
+                            145deg,
+                            #5430bd,
+                            #7046e8 48%,
+                            #2678ed
+                    );
+
+        }
+
+
+        .info-section::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+
+            height: 350px;
+
+            border-radius: 50%;
+
+            top: -170px;
+
+            right: -130px;
+
+            background:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.10
+                    );
+
+        }
+
+
+        .info-section::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+
+            height: 280px;
+
+            border-radius: 50%;
+
+            bottom: -150px;
+
+            left: -130px;
+
+            background:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.08
+                    );
+
+        }
+
+
+        .info-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .logo {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 29px;
+
+            font-weight: 850;
+
+        }
+
+
+        .logo i {
+
+            color: #c5a8ff;
+
+            font-size: 34px;
+
+        }
+
+
+        .info-title {
+
+            font-size: 43px;
+
+            line-height: 1.08;
+
+            letter-spacing: -1.5px;
+
+            font-weight: 850;
+
+            margin-top: 75px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .info-text {
+
+            color:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.84
+                    );
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           BENEFITS
+        ===================================================== */
+
+        .benefits {
+
+            margin-top: 40px;
+
+        }
+
+
+        .benefit {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 17px;
+
+            color:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.92
+                    );
+
+            font-weight: 600;
+
+        }
+
+
+        .benefit-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                    rgba(
+                            255,
+                            255,
+                            255,
+                            0.14
+                    );
+
+        }
+
+
+        /* =====================================================
+           RIGHT SIDE
+        ===================================================== */
+
+        .form-section {
+
+            padding: 45px 50px;
+
+        }
+
+
+        .form-heading {
+
+            font-size: 32px;
+
+            font-weight: 850;
+
+            color: var(--dark);
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .form-subtitle {
+
+            color: var(--muted);
+
+            margin-bottom: 28px;
+
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-label {
+
+            font-size: 13px;
+
+            font-weight: 750;
+
+            color: var(--dark);
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform:
+                    translateY(-50%);
+
+            color: #8a95aa;
+
+            z-index: 5;
+
+        }
+
+
+        .modern-input,
+        .modern-select {
+
+            width: 100%;
+
+            height: 48px;
+
+            border:
+                    1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding:
+                    0 14px 0 43px;
+
+            color: var(--dark);
+
+            outline: none;
+
+            transition: 0.2s;
+
+            background: white;
+
+        }
+
+
+        .modern-select {
+
+            padding-left: 43px;
+
+        }
+
+
+        .modern-input:focus,
+        .modern-select:focus {
+
+            border-color:
+                    var(--primary);
+
+            box-shadow:
+                    0 0 0 4px
+                    rgba(
+                            112,
+                            70,
+                            232,
+                            0.10
+                    );
+
+        }
+
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 13px;
+
+            top: 50%;
+
+            transform:
+                    translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #8791a5;
+
+            cursor: pointer;
+
+        }
+
+
+        .password-input {
+
+            padding-right: 45px;
+
+        }
+
+
+        /* =====================================================
+           REGISTER BUTTON
+        ===================================================== */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 750;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            var(--primary),
+                            var(--blue)
+                    );
+
+            box-shadow:
+                    0 10px 25px
+                    rgba(
+                            85,
+                            66,
+                            210,
+                            0.22
+                    );
+
+            transition: 0.2s;
+
+        }
+
+
+        .register-btn:hover {
+
+            transform:
+                    translateY(-2px);
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .message {
+
+            display: none;
+
+            border-radius: 13px;
+
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+        .message.success {
+
+            background: #e7faf3;
+
+            color: #12845e;
+
+            border:
+                    1px solid #bfeedd;
+
+        }
+
+
+        .message.error {
+
+            background: #ffecef;
+
+            color: #c92f43;
+
+            border:
+                    1px solid #ffcbd3;
+
+        }
+
+
+        /* =====================================================
+           LOGIN LINK
+        ===================================================== */
+
+        .login-text {
+
+            text-align: center;
+
+            color: var(--muted);
+
+            margin-top: 22px;
+
+        }
+
+
+        .login-link {
+
+            color: var(--primary);
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+        }
+
+
+        .login-link:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .secure-note {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            color: #8a95aa;
+
+            font-size: 12px;
+
+            margin-top: 18px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .register-wrapper {
+
+                grid-template-columns: 1fr;
+
+                max-width: 650px;
+
+            }
+
+
+            .info-section {
+
+                display: none;
+
+            }
+
+
+            .form-section {
+
+                padding: 40px 35px;
+
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            body {
+
+                padding: 0;
+
+            }
+
+
+            .register-wrapper {
+
+                min-height: 100vh;
+
+                border-radius: 0;
+
+            }
+
+
+            .form-section {
+
+                padding:
+                        30px 20px;
+
+            }
+
+
+            .form-heading {
+
+                font-size: 29px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     REGISTER WRAPPER
+============================================================ -->
+
+<div class="register-wrapper">
+
+
+    <!-- ========================================================
+         INFORMATION SECTION
+    ========================================================= -->
+
+    <section class="info-section">
+
+
+        <div class="info-content">
+
+
+            <a
+                    href="/"
+                    class="logo">
+
+                <i class="bi bi-universal-access-circle"></i>
+
+                FitTrack
+
+            </a>
+
+
+            <h1 class="info-title">
+
+                Start your
+                fitness journey
+                today. 🚀
+
+            </h1>
+
+
+            <p class="info-text">
+
+                Create your FitTrack account and bring
+                your workouts, goals and challenges
+                together in one place.
+
+            </p>
+
+
+            <div class="benefits">
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+
+                        <i class="bi bi-lightning-charge-fill"></i>
+
+                    </span>
+
+                    Track every workout
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+
+                        <i class="bi bi-bullseye"></i>
+
+                    </span>
+
+                    Set meaningful fitness goals
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+
+                        <i class="bi bi-trophy-fill"></i>
+
+                    </span>
+
+                    Join exciting challenges
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </span>
+
+                    Learn from the community
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div
+                class="small position-relative"
+                style="
+                    z-index:2;
+                    color:rgba(255,255,255,.65);
+                ">
+
+            © 2026 FitTrack
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ========================================================
+         FORM SECTION
+    ========================================================= -->
+
+    <section class="form-section">
+
+
+        <h2 class="form-heading">
+
+            Create your account
+
+        </h2>
+
+
+        <p class="form-subtitle">
+
+            Join FitTrack and start making progress.
+
+        </p>
+
+
+        <!-- MESSAGE -->
+
+        <div
+                id="message"
+                class="message">
+
+        </div>
+
+
+        <!-- =====================================================
+             FORM
+        ===================================================== -->
+
+        <form id="registerForm">
+
+
+            <div class="row g-3">
+
+
+                <!-- NAME -->
+
+                <div class="col-12">
+
+                    <label
+                            for="name"
+                            class="form-label">
+
+                        Full Name
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-person input-icon">
+                        </i>
+
+
+                        <input
+                                type="text"
+                                id="name"
+                                class="modern-input"
+                                placeholder="Enter your full name"
+                                required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="col-12">
+
+                    <label
+                            for="email"
+                            class="form-label">
+
+                        Email Address
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-envelope input-icon">
+                        </i>
+
+
+                        <input
+                                type="email"
+                                id="email"
+                                class="modern-input"
+                                placeholder="you@example.com"
+                                required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="col-md-6">
+
+                    <label
+                            for="password"
+                            class="form-label">
+
+                        Password
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-lock input-icon">
+                        </i>
+
+
+                        <input
+                                type="password"
+                                id="password"
+                                class="modern-input password-input"
+                                placeholder="Create password"
+                                minlength="6"
+                                required>
+
+
+                        <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword(
+                                    'password',
+                                    'passwordIcon'
+                                )">
+
+                            <i
+                                    class="bi bi-eye"
+                                    id="passwordIcon">
+                            </i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="col-md-6">
+
+                    <label
+                            for="confirmPassword"
+                            class="form-label">
+
+                        Confirm Password
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-shield-lock input-icon">
+                        </i>
+
+
+                        <input
+                                type="password"
+                                id="confirmPassword"
+                                class="modern-input password-input"
+                                placeholder="Confirm password"
+                                minlength="6"
+                                required>
+
+
+                        <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword(
+                                    'confirmPassword',
+                                    'confirmPasswordIcon'
+                                )">
+
+                            <i
+                                    class="bi bi-eye"
+                                    id="confirmPasswordIcon">
+                            </i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AGE -->
+
+                <div class="col-md-4">
+
+                    <label
+                            for="age"
+                            class="form-label">
+
+                        Age
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-calendar3 input-icon">
+                        </i>
+
+
+                        <input
+                                type="number"
+                                id="age"
+                                class="modern-input"
+                                placeholder="Age"
+                                min="10"
+                                max="100">
+
+                    </div>
+
+                </div>
+
+
+                <!-- HEIGHT -->
+
+                <div class="col-md-4">
+
+                    <label
+                            for="height"
+                            class="form-label">
+
+                        Height (cm)
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-rulers input-icon">
+                        </i>
+
+
+                        <input
+                                type="number"
+                                id="height"
+                                class="modern-input"
+                                placeholder="Height"
+                                min="50"
+                                max="250"
+                                step="0.1">
+
+                    </div>
+
+                </div>
+
+
+                <!-- WEIGHT -->
+
+                <div class="col-md-4">
+
+                    <label
+                            for="weight"
+                            class="form-label">
+
+                        Weight (kg)
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-speedometer2 input-icon">
+                        </i>
+
+
+                        <input
+                                type="number"
+                                id="weight"
+                                class="modern-input"
+                                placeholder="Weight"
+                                min="20"
+                                max="300"
+                                step="0.1">
+
+                    </div>
+
+                </div>
+
+
+                <!-- FITNESS GOAL -->
+
+                <div class="col-12">
+
+                    <label
+                            for="fitnessGoal"
+                            class="form-label">
+
+                        Fitness Goal
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                                class="bi bi-bullseye input-icon">
+                        </i>
+
+
+                        <select
+                                id="fitnessGoal"
+                                class="modern-select">
+
+                            <option value="">
+
+                                Select your goal
+
+                            </option>
+
+                            <option value="Weight Loss">
+
+                                Weight Loss
+
+                            </option>
+
+                            <option value="Muscle Gain">
+
+                                Muscle Gain
+
+                            </option>
+
+                            <option value="Improve Fitness">
+
+                                Improve Fitness
+
+                            </option>
+
+                            <option value="Build Strength">
+
+                                Build Strength
+
+                            </option>
+
+                            <option value="Improve Endurance">
+
+                                Improve Endurance
+
+                            </option>
+
+                            <option value="Stay Active">
+
+                                Stay Active
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- REGISTER BUTTON -->
+
+            <button
+                    type="submit"
+                    class="register-btn mt-4">
+
+                <i class="bi bi-person-plus-fill me-2"></i>
+
+                Create FitTrack Account
+
+            </button>
+
+
+        </form>
+
+
+        <!-- =====================================================
+             LOGIN LINK
+        ===================================================== -->
+
+        <div class="login-text">
+
+            Already have an account?
+
+            <a
+                    href="/login"
+                    class="login-link">
+
+                Sign In
+
+            </a>
+
+        </div>
+
+
+        <div class="secure-note">
+
+            <i class="bi bi-shield-check"></i>
+
+            Your password is securely encrypted
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+
+<script>
+
+
+    /* ============================================================
+       TOGGLE PASSWORD
+    ============================================================ */
+
+    function togglePassword(
+        inputId,
+        iconId
+    ) {
+
+
+        const input =
+            document.getElementById(
+                inputId
+            );
+
+
+        const icon =
+            document.getElementById(
+                iconId
+            );
+
+
+        if (
+            input.type === "password"
+        ) {
+
+            input.type = "text";
+
+            icon.className =
+                "bi bi-eye-slash";
+
+        }
+
+        else {
+
+            input.type = "password";
+
+            icon.className =
+                "bi bi-eye";
+
+        }
+
+    }
+
+
+    /* ============================================================
+       MESSAGE
+    ============================================================ */
+
+    function showMessage(
+        message,
+        type
+    ) {
+
+
+        const box =
+            document.getElementById(
+                "message"
+            );
+
+
+        box.textContent =
+            message;
+
+
+        box.className =
+            "message " + type;
+
+
+        box.style.display =
+            "block";
+
+    }
+
+
+    /* ============================================================
+       REGISTER
+    ============================================================ */
+
+    document
+        .getElementById("registerForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+
+                event.preventDefault();
+
+
+                const password =
+                    document
+                        .getElementById(
+                            "password"
+                        )
+                        .value;
+
+
+                const confirmPassword =
+                    document
+                        .getElementById(
+                            "confirmPassword"
+                        )
+                        .value;
+
+
+                /* PASSWORD CHECK */
+
+                if (
+                    password !==
+                    confirmPassword
+                ) {
+
+                    showMessage(
+                        "Passwords do not match.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    password.length < 6
+                ) {
+
+                    showMessage(
+                        "Password must be at least 6 characters.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                /* USER DATA */
+
+                const user = {
+
+                    name:
+                        document
+                            .getElementById(
+                                "name"
+                            )
+                            .value
+                            .trim(),
+
+                    email:
+                        document
+                            .getElementById(
+                                "email"
+                            )
+                            .value
+                            .trim(),
+
+                    password:
+                    password,
+
+                    age:
+                        getNumberValue(
+                            "age"
+                        ),
+
+                    height:
+                        getNumberValue(
+                            "height"
+                        ),
+
+                    weight:
+                        getNumberValue(
+                            "weight"
+                        ),
+
+                    fitnessGoal:
+                    document
+                        .getElementById(
+                            "fitnessGoal"
+                        )
+                        .value
+
+                };
+
+
+                try {
+
+
+                    const response =
+                        await fetch(
+                            "/api/users/register",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify(user)
+
+                            }
+                        );
+
+
+                    const result =
+                        await response.text();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            result ||
+                            "Registration failed."
+                        );
+
+                    }
+
+
+                    showMessage(
+                        "Account created successfully! Redirecting to login...",
+                        "success"
+                    );
+
+
+                    document
+                        .getElementById(
+                            "registerForm"
+                        )
+                        .reset();
+
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "/login";
+
+                        },
+                        1500
+                    );
+
+
+                }
+
+
+                catch (error) {
+
+
+                    console.error(
+                        "Registration error:",
+                        error
+                    );
+
+
+                    let message =
+                        error.message;
+
+
+                    if (
+                        message.includes(
+                            "Email already registered"
+                        )
+                    ) {
+
+                        message =
+                            "This email is already registered.";
+
+                    }
+
+
+                    showMessage(
+                        message,
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+    /* ============================================================
+       NUMBER HELPER
+    ============================================================ */
+
+    function getNumberValue(
+        id
+    ) {
+
+
+        const value =
+            document
+                .getElementById(id)
+                .value;
+
+
+        if (
+            value === ""
+        ) {
+
+            return null;
+
+        }
+
+
+        return Number(value);
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
