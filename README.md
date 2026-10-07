@@ -1,4 +1,4 @@
-````markdown
+
 # 🏋️ FitTrack - Online Fitness Tracking Application
 
 ### Full-Stack Fitness Tracking Web Application
